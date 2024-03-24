@@ -1,0 +1,42 @@
+.nav-form{
+    -fx-background-color: linear-gradient(to top right,#231F20FF, #4b3d34);
+}
+
+.nav-button{
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-text-fill: #fff;
+    -fx-font-size: 12px;
+}
+.nav-button:hover{
+    -fx-background-color: #503023;
+}
+
+.sign_out{
+    -fx-background-color:#503023;
+    -fx-background-radius: 15px;
+    -fx-cursor: hand;
+}
+
+.sign_out:hover{
+    -fx-background-color: #673c2d;
+}
+
+.bg-white{
+    -fx-background-color: #fff;
+    -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,.3),8,0,0,0);
+    -fx-background-radius: 8px;
+}
+
+.bg-white:hover{
+    -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,.5),8,0,0,0);
+}
+
+.card1{
+    -fx-background-color: linear-gradient(to right, #2b428c, #2e58ab);
+    -fx-background-radius: 0px 10px 10px 0px;
+}
+
+card:hover{
+    -fx-effect: dropshadow(three-pass-box);
+}

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="647.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <BorderPane layoutX="6.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
@@ -32,12 +32,12 @@
                      <graphic>
                         <FontAwesomeIcon fill="WHITE" glyphName="SHOPPING_CART" />
                      </graphic></Button>
-                  <Button layoutX="14.0" layoutY="360.0" mnemonicParsing="false" styleClass="sign_out" stylesheets="@stylesDashboard.css">
+                  <Button layoutX="14.0" layoutY="419.0" mnemonicParsing="false" styleClass="sign_out" stylesheets="@stylesDashboard.css">
                      <graphic>
                         <FontAwesomeIcon fill="WHITE" glyphName="SIGN_OUT" size="1.5em" />
                      </graphic>
                   </Button>
-                  <Label layoutX="56.0" layoutY="364.0" text="SIGN OUT" textFill="WHITE" />
+                  <Label layoutX="56.0" layoutY="423.0" text="SIGN OUT" textFill="WHITE" />
                </children>
             </AnchorPane>
          </left>
@@ -46,8 +46,8 @@
                <children>
                   <AnchorPane layoutX="45.0" layoutY="100.0" prefHeight="400.0" prefWidth="440.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <AnchorPane layoutX="9.0" layoutY="10.0" prefHeight="123.0" prefWidth="421.0" styleClass="bg-white" stylesheets="@stylesDashboard.css" />
-                        <AnchorPane layoutX="9.0" layoutY="149.0" prefHeight="241.0" prefWidth="421.0" styleClass="bg-white" stylesheets="@stylesDashboard.css" />
+                        <AnchorPane layoutX="9.0" layoutY="14.0" prefHeight="138.0" prefWidth="469.0" styleClass="bg-white" stylesheets="@stylesDashboard.css" />
+                        <AnchorPane layoutX="10.0" layoutY="172.0" prefHeight="276.0" prefWidth="469.0" styleClass="bg-white" stylesheets="@stylesDashboard.css" />
                      </children>
                   </AnchorPane>
                </children>

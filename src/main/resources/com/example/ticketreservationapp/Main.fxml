@@ -13,11 +13,11 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="588.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
     <left>
-        <AnchorPane prefHeight="407.0" prefWidth="228.0" style="-fx-background-color: #231F20;" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="475.0" prefWidth="256.0" style="-fx-background-color: #231F20;" BorderPane.alignment="CENTER">
             <children>
-                <ImageView fitHeight="234.0" fitWidth="223.0" layoutX="3.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="234.0" fitWidth="243.0" layoutX="3.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@1.png" />
                     </image>
@@ -27,7 +27,7 @@
     <right>
         <AnchorPane prefHeight="400.0" prefWidth="332.0" BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="68.0" layoutY="77.0" prefHeight="25.0" prefWidth="151.0" text="User Login">
+                <Label layoutX="98.0" layoutY="109.0" prefHeight="25.0" prefWidth="151.0" text="User Login">
                     <font>
                         <Font name="System Bold" size="20.0" />
                     </font>
@@ -35,28 +35,28 @@
                         <InnerShadow />
                     </effect>
                 </Label>
-                <Line endX="141.66664123535156" endY="7.62939453125E-6" layoutX="113.0" layoutY="108.0" startX="-79.33334350585938" startY="1.52587890625E-5" stroke="#00000018" />
-                <TextField id="tf_username" fx:id="tf_username" layoutX="78.0" layoutY="158.0" promptText="Username" style="-fx-background-color: transparent; -fx-border-color: #263F73; -fx-border-width: 0 0 1px 0;" />
-                <PasswordField id="tf_password" fx:id="tf_password" layoutX="79.0" layoutY="203.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #263F73; -fx-border-width: 0 0 1px 0;" />
-                <FontAwesomeIcon glyphName="USER" layoutX="59.0" layoutY="182.0" size="15" />
-                <FontAwesomeIcon glyphName="LOCK" layoutX="60.0" layoutY="227.0" size="15" />
-                <Button id="button_login" fx:id="button_login" layoutX="99.0" layoutY="258.0" minHeight="20.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="85.0" style="-fx-font-family: Verdana; -fx-background-color: #231F20; -fx-cursor: hand;" stylesheets="@stylesDashboard.css" text="LOGIN" textFill="WHITE">
+                <Line endX="141.66664123535156" endY="7.62939453125E-6" layoutX="143.0" layoutY="140.0" startX="-79.33334350585938" startY="1.52587890625E-5" stroke="#00000018" />
+                <TextField id="tf_username" fx:id="tf_username" layoutX="104.0" layoutY="178.0" promptText="Username" style="-fx-background-color: transparent; -fx-border-color: #263F73; -fx-border-width: 0 0 1px 0;" />
+                <PasswordField id="tf_password" fx:id="tf_password" layoutX="105.0" layoutY="223.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #263F73; -fx-border-width: 0 0 1px 0;" />
+                <FontAwesomeIcon glyphName="USER" layoutX="85.0" layoutY="202.0" size="15" />
+                <FontAwesomeIcon glyphName="LOCK" layoutX="86.0" layoutY="247.0" size="15" />
+                <Button id="button_login" fx:id="button_login" layoutX="125.0" layoutY="278.0" minHeight="20.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="85.0" style="-fx-font-family: Verdana; -fx-background-color: #231F20; -fx-cursor: hand;" stylesheets="@stylesDashboard.css" text="LOGIN" textFill="WHITE">
                     <font>
                         <Font name="Verdana" size="12.0" />
                     </font>
                 </Button>
-                <Label alignment="CENTER" layoutX="-4.0" layoutY="333.0" prefHeight="17.0" prefWidth="291.0" text="Not yet a user? " textFill="#000000ab">
+                <Label alignment="CENTER" layoutX="29.0" layoutY="420.0" prefHeight="17.0" prefWidth="291.0" text="Not yet a user? " textFill="#000000ab">
                     <font>
                         <Font name="Verdana" size="9.0" />
                     </font>
                 </Label>
-                <FontAwesomeIcon glyphName="USERS" layoutX="42.0" layoutY="97.0" size="15" />
-                <ImageView fitHeight="73.0" fitWidth="51.0" layoutX="219.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                <FontAwesomeIcon glyphName="USERS" layoutX="72.0" layoutY="129.0" size="15" />
+                <ImageView fitHeight="73.0" fitWidth="51.0" layoutX="250.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@Logo.png" />
                     </image>
                 </ImageView>
-            <Button id="button_sign_up" fx:id="button_sign_up" layoutX="116.0" layoutY="350.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Sign Up" textFill="#231f20" underline="true">
+            <Button id="button_sign_up" fx:id="button_sign_up" layoutX="149.0" layoutY="437.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Sign Up" textFill="#231f20" underline="true">
                <font>
                   <Font size="9.0" />
                </font>

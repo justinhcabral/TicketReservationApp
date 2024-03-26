@@ -51,9 +51,9 @@
                               <AnchorPane layoutX="14.0" layoutY="11.0" prefHeight="117.0" prefWidth="142.0" styleClass="card1" stylesheets="@stylesDashboard.css">
                                  <children>
                                     <AnchorPane layoutY="1.0" prefHeight="116.0" prefWidth="49.0" styleClass="card1-left" stylesheets="@stylesDashboard.css" />
-                                    <Label layoutX="49.0" layoutY="86.0" text="Bought Tickets" textFill="WHITE">
+                                    <Label layoutX="56.0" layoutY="87.0" text="Bought Tickets" textFill="WHITE">
                                        <font>
-                                          <Font name="Microsoft Sans Serif" size="13.0" />
+                                          <Font name="Microsoft Sans Serif" size="12.0" />
                                        </font>
                                     </Label>
                                  </children></AnchorPane>

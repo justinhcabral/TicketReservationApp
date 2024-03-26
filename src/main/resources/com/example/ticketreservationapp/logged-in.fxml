@@ -25,7 +25,7 @@
                      <graphic>
                         <FontAwesomeIcon fill="WHITE" glyphName="TICKET" />
                      </graphic></Button>
-                  <Button layoutX="19.0" layoutY="174.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" styleClass="nav-button" stylesheets="@stylesDashboard.css" text="Profile">
+                  <Button layoutX="19.0" layoutY="174.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" styleClass="nav-button" stylesheets="@stylesDashboard.css" text="Cart">
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font>
@@ -51,6 +51,11 @@
                               <AnchorPane layoutX="14.0" layoutY="11.0" prefHeight="117.0" prefWidth="142.0" styleClass="card1" stylesheets="@stylesDashboard.css">
                                  <children>
                                     <AnchorPane layoutY="1.0" prefHeight="116.0" prefWidth="49.0" styleClass="card1-left" stylesheets="@stylesDashboard.css" />
+                                    <Label layoutX="49.0" layoutY="86.0" text="Bought Tickets" textFill="WHITE">
+                                       <font>
+                                          <Font name="Microsoft Sans Serif" size="13.0" />
+                                       </font>
+                                    </Label>
                                  </children></AnchorPane>
                               <AnchorPane layoutX="164.0" layoutY="11.0" prefHeight="117.0" prefWidth="142.0" styleClass="card2" stylesheets="@stylesDashboard.css">
                                  <children>

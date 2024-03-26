@@ -52,6 +52,7 @@
 
 .card3{
     -fx-background-color: linear-gradient(to right, #9d2249, #cc1c5a);
+    -fx-background-radius: 0px 10px 10px 0px;
 }
 
 .card3-left{

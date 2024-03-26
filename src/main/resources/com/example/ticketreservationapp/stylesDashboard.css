@@ -37,6 +37,10 @@
     -fx-background-radius: 0px 10px 10px 0px;
 }
 
+.card1-left{
+    -fx-background-color: linear-gradient(to right,#21378, #2b428c);
+}
+
 card:hover{
-    -fx-effect: dropshadow(three-pass-box);
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5),5,0,0,0);
 }

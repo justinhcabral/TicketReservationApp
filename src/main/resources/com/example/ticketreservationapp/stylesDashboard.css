@@ -41,6 +41,24 @@
     -fx-background-color: linear-gradient(to right,#21378, #2b428c);
 }
 
+.card2{
+    -fx-background-color:linear-gradient(to right, #772d90, #a42fb8);
+    -fx-background-radius: 0px 10px 10px 0px;
+}
+
+.card2-left{
+    -fx-background-color: linear-gradient(to right, #641f7f, #772d90);
+}
+
+.card3{
+    -fx-background-color: linear-gradient(to right, #9d2249, #cc1c5a);
+}
+
+.card3-left{
+    -fx-background-color: linear-gradient(to right, #891a41,#9d2249);
+}
+
+
 card:hover{
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5),5,0,0,0);
 }

@@ -52,20 +52,20 @@
                                  <children>
                                     <AnchorPane layoutY="1.0" prefHeight="115.0" prefWidth="49.0" styleClass="card1-left" stylesheets="@stylesDashboard.css" />
                                  </children></AnchorPane>
-                              <AnchorPane layoutX="164.0" layoutY="11.0" prefHeight="117.0" prefWidth="142.0" styleClass="card1" stylesheets="@stylesDashboard.css">
+                              <AnchorPane layoutX="164.0" layoutY="11.0" prefHeight="117.0" prefWidth="142.0" styleClass="card2" stylesheets="@stylesDashboard.css">
                                  <children>
                                     <AnchorPane layoutY="1.0" prefHeight="115.0" prefWidth="49.0">
                                        <children>
-                                          <AnchorPane prefHeight="115.0" prefWidth="49.0" styleClass="card1-left" stylesheets="@stylesDashboard.css" />
+                                          <AnchorPane prefHeight="115.0" prefWidth="49.0" styleClass="card2-left" stylesheets="@stylesDashboard.css" />
                                        </children>
                                     </AnchorPane>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane layoutX="313.0" layoutY="11.0" prefHeight="117.0" prefWidth="142.0" styleClass="card1" stylesheets="@stylesDashboard.css">
+                              <AnchorPane layoutX="313.0" layoutY="11.0" prefHeight="117.0" prefWidth="142.0" styleClass="card3" stylesheets="@stylesDashboard.css">
                                  <children>
                                     <AnchorPane layoutY="1.0" prefHeight="115.0" prefWidth="49.0">
                                        <children>
-                                          <AnchorPane prefHeight="115.0" prefWidth="49.0" styleClass="card1-left" stylesheets="@stylesDashboard.css" />
+                                          <AnchorPane prefHeight="115.0" prefWidth="49.0" styleClass="card3-left" stylesheets="@stylesDashboard.css" />
                                        </children>
                                     </AnchorPane>
                                  </children>

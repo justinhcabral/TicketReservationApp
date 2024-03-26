@@ -48,9 +48,28 @@
                      <children>
                         <AnchorPane layoutX="9.0" layoutY="14.0" prefHeight="138.0" prefWidth="469.0" styleClass="bg-white" stylesheets="@stylesDashboard.css">
                            <children>
-                              <AnchorPane layoutX="14.0" layoutY="11.0" prefHeight="117.0" prefWidth="142.0" styleClass="card1" stylesheets="@stylesDashboard.css" />
-                              <AnchorPane layoutX="164.0" layoutY="11.0" prefHeight="117.0" prefWidth="142.0" styleClass="card1" stylesheets="@stylesDashboard.css" />
-                              <AnchorPane layoutX="313.0" layoutY="11.0" prefHeight="117.0" prefWidth="142.0" styleClass="card1" stylesheets="@stylesDashboard.css" />
+                              <AnchorPane layoutX="14.0" layoutY="11.0" prefHeight="117.0" prefWidth="142.0" styleClass="card1" stylesheets="@stylesDashboard.css">
+                                 <children>
+                                    <AnchorPane layoutY="1.0" prefHeight="115.0" prefWidth="49.0" styleClass="card1-left" stylesheets="@stylesDashboard.css" />
+                                 </children></AnchorPane>
+                              <AnchorPane layoutX="164.0" layoutY="11.0" prefHeight="117.0" prefWidth="142.0" styleClass="card1" stylesheets="@stylesDashboard.css">
+                                 <children>
+                                    <AnchorPane layoutY="1.0" prefHeight="115.0" prefWidth="49.0">
+                                       <children>
+                                          <AnchorPane prefHeight="115.0" prefWidth="49.0" styleClass="card1-left" stylesheets="@stylesDashboard.css" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="313.0" layoutY="11.0" prefHeight="117.0" prefWidth="142.0" styleClass="card1" stylesheets="@stylesDashboard.css">
+                                 <children>
+                                    <AnchorPane layoutY="1.0" prefHeight="115.0" prefWidth="49.0">
+                                       <children>
+                                          <AnchorPane prefHeight="115.0" prefWidth="49.0" styleClass="card1-left" stylesheets="@stylesDashboard.css" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
                            </children></AnchorPane>
                         <AnchorPane layoutX="10.0" layoutY="172.0" prefHeight="276.0" prefWidth="469.0" styleClass="bg-white" stylesheets="@stylesDashboard.css" />
                      </children>

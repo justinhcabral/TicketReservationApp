@@ -64,6 +64,11 @@
                                           <AnchorPane prefHeight="115.0" prefWidth="49.0" styleClass="card2-left" stylesheets="@stylesDashboard.css" />
                                        </children>
                                     </AnchorPane>
+                                    <Label layoutX="55.0" layoutY="88.0" text="Concerts" textFill="WHITE">
+                                       <font>
+                                          <Font name="Microsoft Sans Serif" size="12.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </AnchorPane>
                               <AnchorPane layoutX="313.0" layoutY="11.0" prefHeight="117.0" prefWidth="142.0" styleClass="card3" stylesheets="@stylesDashboard.css">
@@ -73,6 +78,11 @@
                                           <AnchorPane prefHeight="115.0" prefWidth="49.0" styleClass="card3-left" stylesheets="@stylesDashboard.css" />
                                        </children>
                                     </AnchorPane>
+                                    <Label layoutX="55.0" layoutY="85.0" text="Concerts" textFill="WHITE">
+                                       <font>
+                                          <Font name="Microsoft Sans Serif" size="12.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </AnchorPane>
                            </children></AnchorPane>

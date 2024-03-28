@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="647.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="647.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ticketreservationapp.LoggedInController">
    <children>
       <BorderPane layoutX="6.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
@@ -18,21 +18,21 @@
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Label>
-                  <Button layoutX="12.0" layoutY="139.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="137.0" styleClass="nav-button" stylesheets="@stylesDashboard.css" text="Bought Tickets">
+                  <Button fx:id="bought_tickets" layoutX="12.0" layoutY="139.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="137.0" styleClass="nav-button" stylesheets="@stylesDashboard.css" text="Bought Tickets">
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font>
                      <graphic>
                         <FontAwesomeIcon fill="WHITE" glyphName="TICKET" />
                      </graphic></Button>
-                  <Button layoutX="19.0" layoutY="174.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" styleClass="nav-button" stylesheets="@stylesDashboard.css" text="Cart">
+                  <Button fx:id="cart" layoutX="19.0" layoutY="174.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" styleClass="nav-button" stylesheets="@stylesDashboard.css" text="Cart">
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font>
                      <graphic>
                         <FontAwesomeIcon fill="WHITE" glyphName="SHOPPING_CART" />
                      </graphic></Button>
-                  <Button layoutX="14.0" layoutY="419.0" mnemonicParsing="false" styleClass="sign_out" stylesheets="@stylesDashboard.css">
+                  <Button fx:id="button_signout" layoutX="14.0" layoutY="419.0" mnemonicParsing="false" styleClass="sign_out" stylesheets="@stylesDashboard.css">
                      <graphic>
                         <FontAwesomeIcon fill="WHITE" glyphName="SIGN_OUT" size="1.5em" />
                      </graphic>
@@ -48,7 +48,7 @@
                      <children>
                         <AnchorPane layoutX="9.0" layoutY="14.0" prefHeight="138.0" prefWidth="469.0" styleClass="bg-white" stylesheets="@stylesDashboard.css">
                            <children>
-                              <AnchorPane layoutX="14.0" layoutY="11.0" prefHeight="117.0" prefWidth="142.0" styleClass="card1" stylesheets="@stylesDashboard.css">
+                              <AnchorPane fx:id="bought_tickets" layoutX="14.0" layoutY="11.0" prefHeight="117.0" prefWidth="142.0" styleClass="card1" stylesheets="@stylesDashboard.css">
                                  <children>
                                     <AnchorPane layoutY="1.0" prefHeight="116.0" prefWidth="49.0" styleClass="card1-left" stylesheets="@stylesDashboard.css" />
                                     <Label layoutX="56.0" layoutY="87.0" text="Bought Tickets" textFill="WHITE">
@@ -58,7 +58,7 @@
                                     </Label>
                                     <FontAwesomeIcon glyphName="TICKET" layoutX="104.0" layoutY="35.0" size="2em" />
                                  </children></AnchorPane>
-                              <AnchorPane layoutX="164.0" layoutY="11.0" prefHeight="117.0" prefWidth="142.0" styleClass="card2" stylesheets="@stylesDashboard.css">
+                              <AnchorPane fx:id="cart" layoutX="164.0" layoutY="11.0" prefHeight="117.0" prefWidth="142.0" styleClass="card2" stylesheets="@stylesDashboard.css">
                                  <children>
                                     <AnchorPane layoutY="1.0" prefHeight="115.0" prefWidth="49.0">
                                        <children>

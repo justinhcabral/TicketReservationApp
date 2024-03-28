@@ -14,11 +14,10 @@ public class LoggedInController implements Initializable {
     private AnchorPane bought_tickets;
 
     @FXML
-    private FontAwesomeIcon button_signout;
+    private Button button_signout;
 
     @FXML
     private AnchorPane cart;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

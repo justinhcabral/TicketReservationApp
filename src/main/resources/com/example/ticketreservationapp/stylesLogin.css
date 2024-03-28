@@ -1,0 +1,11 @@
+.button_login{
+    -fx-background-color:  #231F20;
+}
+
+.button_login:hover{
+    -fx-background-color: #673c2d;
+}
+
+.button-signUp:hover{
+    -fx-text-fill: #673c2d;
+}

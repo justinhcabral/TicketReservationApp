@@ -14,25 +14,25 @@
             <AnchorPane prefHeight="359.0" prefWidth="160.0" styleClass="nav-form" stylesheets="@stylesDashboard.css" BorderPane.alignment="CENTER">
                <children>
                   <FontAwesomeIcon fill="WHITE" glyphName="USER" layoutX="70.0" layoutY="35.0" size="2em" />
-                  <Label layoutY="38.0" prefHeight="27.0" prefWidth="159.0" style="-fx-alignment: CENTER;" text="YOUR USERNAME" textFill="WHITE">
+                  <Label fx:id="profileName" layoutY="38.0" prefHeight="27.0" prefWidth="159.0" style="-fx-alignment: CENTER;" text="YOUR USERNAME" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Label>
-                  <Button fx:id="bought_tickets" layoutX="12.0" layoutY="139.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="137.0" styleClass="nav-button" stylesheets="@stylesDashboard.css" text="Bought Tickets">
+                  <Button fx:id="bought_tickets_sidebar" layoutX="12.0" layoutY="139.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="137.0" styleClass="nav-button" stylesheets="@stylesDashboard.css" text="Bought Tickets">
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font>
                      <graphic>
                         <FontAwesomeIcon fill="WHITE" glyphName="TICKET" />
                      </graphic></Button>
-                  <Button fx:id="cart" layoutX="19.0" layoutY="174.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" styleClass="nav-button" stylesheets="@stylesDashboard.css" text="Cart">
+                  <Button fx:id="cart_sidebar" layoutX="19.0" layoutY="174.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" styleClass="nav-button" stylesheets="@stylesDashboard.css" text="Cart">
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font>
                      <graphic>
                         <FontAwesomeIcon fill="WHITE" glyphName="SHOPPING_CART" />
                      </graphic></Button>
-                  <Button fx:id="button_signout" layoutX="14.0" layoutY="419.0" mnemonicParsing="false" styleClass="sign_out" stylesheets="@stylesDashboard.css">
+                  <Button fx:id="button_signOut" layoutX="14.0" layoutY="419.0" mnemonicParsing="false" styleClass="sign_out" stylesheets="@stylesDashboard.css">
                      <graphic>
                         <FontAwesomeIcon fill="WHITE" glyphName="SIGN_OUT" size="1.5em" />
                      </graphic>

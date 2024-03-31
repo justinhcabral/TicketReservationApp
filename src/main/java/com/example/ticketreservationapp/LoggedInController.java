@@ -27,8 +27,15 @@ public class LoggedInController implements Initializable {
 
     @FXML
     private Button cart_sidebar;
+
     @FXML
     private Label profileName;
+
+    @FXML
+    private Label concerts;
+
+    @FXML
+    private Button concerts_sidebar;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         button_signOut.setOnAction(new EventHandler<ActionEvent>() {

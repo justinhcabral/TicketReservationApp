@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="463.0" prefWidth="687.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ticketreservationapp.ConcertsPageController">
+    <children>
+        <BorderPane layoutX="6.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <left>
+                <AnchorPane prefHeight="462.0" prefWidth="129.0" styleClass="nav-form" stylesheets="@stylesDashboard.css" BorderPane.alignment="CENTER">
+                    <children>
+                        <FontAwesomeIcon fill="WHITE" glyphName="USER" layoutX="55.0" layoutY="35.0" size="2em" />
+                        <Label fx:id="profileName" layoutY="38.0" prefHeight="27.0" prefWidth="129.0" style="-fx-alignment: CENTER;" text="YOUR USERNAME" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font></Label>
+                        <Button fx:id="bought_tickets_sidebar" layoutX="1.0" layoutY="139.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="124.0" styleClass="nav-button" stylesheets="@stylesDashboard.css" text="Bought Tickets">
+                            <font>
+                                <Font name="Verdana" size="12.0" />
+                            </font>
+                            <graphic>
+                                <FontAwesomeIcon fill="WHITE" glyphName="TICKET" />
+                            </graphic></Button>
+                        <Button fx:id="cart_sidebar" layoutY="174.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="127.0" styleClass="nav-button" stylesheets="@stylesDashboard.css" text="Cart">
+                            <font>
+                                <Font name="Verdana" size="12.0" />
+                            </font>
+                            <graphic>
+                                <FontAwesomeIcon fill="WHITE" glyphName="SHOPPING_CART" />
+                            </graphic></Button>
+                        <Button fx:id="button_signOut" layoutX="14.0" layoutY="419.0" mnemonicParsing="false" styleClass="sign_out" stylesheets="@stylesDashboard.css">
+                            <graphic>
+                                <FontAwesomeIcon fill="WHITE" glyphName="SIGN_OUT" size="1.5em" />
+                            </graphic>
+                        </Button>
+                        <Label layoutX="56.0" layoutY="423.0" text="SIGN OUT" textFill="WHITE" />
+                  <Button fx:id="concerts_sidebar" layoutY="206.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="129.0" styleClass="nav-button" stylesheets="@stylesDashboard.css" text="Concerts">
+                     <font>
+                        <Font name="Verdana" size="12.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="MUSIC" />
+                     </graphic>
+                  </Button>
+                    </children>
+                </AnchorPane>
+            </left>
+         <center>
+            <AnchorPane prefHeight="463.3333333333333" prefWidth="558.0" BorderPane.alignment="CENTER">
+               <children>
+                  <AnchorPane layoutX="9.0" layoutY="14.0" prefHeight="169.0" prefWidth="539.0" styleClass="bg-white" stylesheets="@stylesDashboard.css" AnchorPane.topAnchor="11.0">
+                     <children>
+                        <AnchorPane layoutY="-1.0" prefHeight="170.0" prefWidth="209.0" styleClass="info-card" stylesheets="@stylesDashboard.css">
+                           <children>
+                              <Label layoutX="28.0" layoutY="25.0" prefHeight="17.0" prefWidth="40.0" text="Event: " />
+                              <Label layoutX="79.0" layoutY="23.0" prefHeight="17.0" prefWidth="113.0" styleClass="label-info" stylesheets="@stylesDashboard.css" text="Event: " />
+                              <Label layoutX="28.0" layoutY="56.0" prefHeight="17.0" prefWidth="40.0" text="Venue" />
+                              <Label layoutX="79.0" layoutY="54.0" prefHeight="17.0" prefWidth="113.0" styleClass="label-info" stylesheets="@stylesDashboard.css" text="Event: " />
+                              <Label layoutX="28.0" layoutY="87.0" prefHeight="17.0" prefWidth="40.0" text="Date" />
+                              <Label layoutX="79.0" layoutY="85.0" prefHeight="17.0" prefWidth="113.0" styleClass="label-info" stylesheets="@stylesDashboard.css" text="Event: " />
+                              <Button layoutX="81.0" layoutY="130.0" mnemonicParsing="false" styleClass="select-button" stylesheets="@stylesDashboard.css" text="Select" />
+                           </children>
+                        </AnchorPane>
+                        <TableView layoutX="216.0" layoutY="2.0" prefHeight="163.0" prefWidth="319.0" stylesheets="@stylesDashboard.css">
+                           <columns>
+                              <TableColumn prefWidth="105.99998474121094" text="Event" />
+                              <TableColumn prefWidth="102.66665649414062" text="Venue" />
+                              <TableColumn prefWidth="104.66671752929688" text="Date" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="9.0" layoutY="196.0" prefHeight="258.0" prefWidth="539.0" styleClass="bg-white" stylesheets="@stylesDashboard.css">
+                     <children>
+                        <AnchorPane prefHeight="259.0" prefWidth="209.0" styleClass="info-card" stylesheets="@stylesDashboard.css">
+                           <children>
+                              <AnchorPane layoutX="30.0" layoutY="14.0" prefHeight="150.0" prefWidth="150.0" styleClass="bg-white" stylesheets="@stylesDashboard.css">
+                                 <children>
+                                    <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                                 </children>
+                              </AnchorPane>
+                              <Label alignment="TOP_CENTER" layoutX="2.0" layoutY="175.0" prefHeight="81.0" prefWidth="204.0" text="Label" textAlignment="CENTER" wrapText="true">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="17.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <Label layoutX="227.0" layoutY="14.0" text="Purchase Tickets">
+                           <font>
+                              <Font name="Verdana" size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </center>
+        </BorderPane>
+    </children>
+</AnchorPane>

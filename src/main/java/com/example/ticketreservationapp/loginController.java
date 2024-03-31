@@ -1,5 +1,6 @@
 package com.example.ticketreservationapp;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -11,6 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -31,8 +34,23 @@ public class loginController implements Initializable {
     @FXML
     private TextField tf_username;
 
+    @FXML
+    private BorderPane mainPane ;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        Platform.runLater(() -> mainPane.requestFocus());
+
+        mainPane.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.getTarget() == mainPane) {
+                    mainPane.requestFocus();
+                    mouseEvent.consume();
+                }
+            }
+        });
 
         button_sign_up.setOnAction(this::switchToSignupScene);
         button_login.setOnAction(new EventHandler<ActionEvent>() {

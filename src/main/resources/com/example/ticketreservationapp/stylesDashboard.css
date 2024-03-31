@@ -25,7 +25,7 @@
 .bg-white{
     -fx-background-color: #fff;
     -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,.3),8,0,0,0);
-    -fx-background-radius: 8px;
+    -fx-background-radius: 10px;
 }
 
 .bg-white:hover{
@@ -60,6 +60,56 @@
 }
 
 
-card:hover{
+.card:hover{
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5),5,0,0,0);
+}
+
+.info-card{
+    -fx-border-color: #673c2d;
+    -fx-border-radius: 10px 0px 0px 10px;
+}
+
+.label-info{
+    -fx-border-color: #673c2d;
+    -fx-border-radius: 0px 5px 0px 0px;
+    -fx-border-width: .8px;
+    -fx-padding: .8px;
+    -fx-font-size: 14px;
+}
+
+.table-view{
+    -fx-background-color: #fff;
+    -fx-size: 50px;
+    -fx-border-color: #231F20FF;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px ;
+    -fx-fill: #fff;
+    -fx-padding: 0px;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: linear-gradient(to top left, #231F20FF, #4b3d34);
+    -fx-background-insets: 0 0 0 0;
+    -fx-background-radius: 10px 10px 0px 0px;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: transparent;
+    -fx-size: 50px;
+    -fx-fill: #fff;
+}
+
+.table-view .column-header .label{
+    -fx-text-fill: #fff;
+}
+
+.select-button{
+    -fx-background-color: #3149a1;
+    -fx-background-radius: 15px;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+}
+
+.select-button:hover{
+    -fx-background-color: #4263d7;
 }

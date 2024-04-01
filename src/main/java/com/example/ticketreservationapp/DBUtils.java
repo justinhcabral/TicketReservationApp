@@ -14,7 +14,19 @@ import java.io.IOException;
 
 public class DBUtils{
 
-    public static void changeScene(ActionEvent event, String fxmlFile, String title, String username){
+    public static Connection connectDb(){ //Method for connecting to local database
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/jdbc-video", "root", "toor");
+            return connect;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void changeScene(ActionEvent event, String fxmlFile, String title, String username){ //method for changing scenes from Login page to Logged in page
         Parent root = null;
 
         if (username != null){
@@ -39,7 +51,7 @@ public class DBUtils{
         stage.show();
     }
 
-    public static void signUpUser(ActionEvent event, String username, String password){
+    public static void signUpUser(ActionEvent event, String username, String password){ //Method for signing up user
         Connection connection = null;
         PreparedStatement psInsert = null;
         PreparedStatement psCheckUserExists = null;
@@ -98,7 +110,7 @@ public class DBUtils{
         }
     }
 
-    public static void logInUser(ActionEvent event, String username, String password){
+    public static void logInUser(ActionEvent event, String username, String password){ //Method for logging user in.
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;

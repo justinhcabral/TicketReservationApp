@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
-<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
@@ -19,14 +23,14 @@
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Label>
-                  <Button fx:id="bought_tickets_sidebar" layoutX="1.0" layoutY="139.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="124.0" styleClass="nav-button" stylesheets="@stylesDashboard.css" text="Bought Tickets">
+                  <Button fx:id="boughtTickets_btn_sidebar" layoutY="164.0" mnemonicParsing="false" onAction="#switchScene" prefHeight="25.0" prefWidth="124.0" styleClass="nav-button" stylesheets="@stylesDashboard.css" text="Bought Tickets">
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font>
                      <graphic>
                         <FontAwesomeIcon fill="WHITE" glyphName="TICKET" />
                      </graphic></Button>
-                  <Button fx:id="cart_sidebar" layoutY="174.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="127.0" styleClass="nav-button" stylesheets="@stylesDashboard.css" text="Cart">
+                  <Button fx:id="cart_btn_sidebar" layoutY="197.0" mnemonicParsing="false" onAction="#switchScene" prefHeight="25.0" prefWidth="127.0" styleClass="nav-button" stylesheets="@stylesDashboard.css" text="Cart">
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font>
@@ -39,12 +43,20 @@
                      </graphic>
                   </Button>
                   <Label layoutX="56.0" layoutY="423.0" text="SIGN OUT" textFill="WHITE" />
-                  <Button fx:id="concerts_sidebar" layoutY="206.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="129.0" styleClass="nav-button" stylesheets="@stylesDashboard.css" text="Concerts">
+                  <Button fx:id="concerts_btn_sidebar" layoutX="-1.0" layoutY="231.0" mnemonicParsing="false" onAction="#switchScene" prefHeight="25.0" prefWidth="129.0" styleClass="nav-button" stylesheets="@stylesDashboard.css" text="Concerts">
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font>
                      <graphic>
                         <FontAwesomeIcon fill="WHITE" glyphName="MUSIC" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="home_btn_sidebar" layoutX="3.0" layoutY="130.0" mnemonicParsing="false" onAction="#switchScene" prefHeight="25.0" prefWidth="124.0" styleClass="nav-button" stylesheets="@stylesDashboard.css" text="Home">
+                     <font>
+                        <Font name="Verdana" size="12.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="HOME" />
                      </graphic>
                   </Button>
                </children>
@@ -53,64 +65,93 @@
          <center>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane layoutX="45.0" layoutY="100.0" prefHeight="400.0" prefWidth="440.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="HomePage" layoutX="45.0" layoutY="100.0" prefHeight="400.0" prefWidth="440.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <AnchorPane layoutX="9.0" layoutY="14.0" prefHeight="138.0" prefWidth="537.0" styleClass="bg-white" stylesheets="@stylesDashboard.css">
+                        <AnchorPane layoutX="11.0" layoutY="17.0" prefHeight="429.0" prefWidth="536.0" styleClass="bg-white" stylesheets="@stylesDashboard.css" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="ticketPurchasePage" prefHeight="463.3333333333333" prefWidth="558.0">
+                     <children>
+                        <AnchorPane layoutX="9.0" layoutY="14.0" prefHeight="169.0" prefWidth="539.0" styleClass="bg-white" stylesheets="@stylesDashboard.css" AnchorPane.topAnchor="11.0">
                            <children>
-                              <AnchorPane fx:id="bought_tickets" layoutX="14.0" layoutY="11.0" prefHeight="117.0" prefWidth="142.0" stylesheets="@stylesDashboard.css">
+                              <AnchorPane layoutY="-1.0" prefHeight="170.0" prefWidth="209.0" styleClass="info-card" stylesheets="@stylesDashboard.css">
                                  <children>
-                                    <AnchorPane layoutY="1.0" prefHeight="116.0" prefWidth="49.0" styleClass="card1-left" stylesheets="@stylesDashboard.css" />
-                                    <Label layoutX="56.0" layoutY="87.0" text="Bought Tickets" textFill="WHITE">
+                                    <Label layoutX="14.0" layoutY="25.0" prefHeight="17.0" prefWidth="58.0" text="Event: ">
                                        <font>
-                                          <Font name="Microsoft Sans Serif" size="12.0" />
+                                          <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <FontAwesomeIcon glyphName="TICKET" layoutX="104.0" layoutY="35.0" size="2em" />
+                                    <Label fx:id="concerts_btn_title" layoutX="79.0" layoutY="23.0" prefHeight="17.0" prefWidth="113.0" styleClass="label-info" stylesheets="@stylesDashboard.css" />
+                                    <Label layoutX="14.0" layoutY="56.0" prefHeight="17.0" prefWidth="57.0" text="Venue: ">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="concerts_btn_venue" layoutX="79.0" layoutY="54.0" prefHeight="17.0" prefWidth="113.0" styleClass="label-info" stylesheets="@stylesDashboard.css" />
+                                    <Label layoutX="14.0" layoutY="87.0" prefHeight="17.0" prefWidth="57.0" text="Date: ">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="concerts_btn_date" layoutX="79.0" layoutY="85.0" prefHeight="17.0" prefWidth="113.0" styleClass="label-info" stylesheets="@stylesDashboard.css" />
+                                    <Button fx:id="concerts_btn_selectEvent" layoutX="81.0" layoutY="130.0" mnemonicParsing="false" styleClass="select-button" stylesheets="@stylesDashboard.css" text="Select" />
                                  </children>
-                                 <styleClass>
-                                    <String fx:value="card1" />
-                                    <String fx:value="card" />
-                                 </styleClass></AnchorPane>
-                              <AnchorPane fx:id="cart" layoutX="198.0" layoutY="11.0" prefHeight="117.0" prefWidth="142.0" stylesheets="@stylesDashboard.css">
+                              </AnchorPane>
+                              <TableView fx:id="concerts_tableView" layoutX="216.0" layoutY="2.0" onMouseClicked="#selectConcertDataList" prefHeight="163.0" prefWidth="319.0" stylesheets="@stylesDashboard.css">
+                                 <columns>
+                                    <TableColumn fx:id="concerts_col_title" prefWidth="105.99998474121094" text="Event" />
+                                    <TableColumn fx:id="concerts_col_venue" prefWidth="102.66665649414062" text="Venue" />
+                                    <TableColumn fx:id="concerts_col_date" prefWidth="104.66671752929688" text="Date" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="9.0" layoutY="196.0" prefHeight="258.0" prefWidth="539.0" styleClass="bg-white" stylesheets="@stylesDashboard.css">
+                           <children>
+                              <AnchorPane prefHeight="259.0" prefWidth="209.0" styleClass="info-card" stylesheets="@stylesDashboard.css">
                                  <children>
-                                    <AnchorPane layoutY="1.0" prefHeight="115.0" prefWidth="49.0">
+                                    <AnchorPane layoutX="30.0" layoutY="14.0" prefHeight="150.0" prefWidth="150.0" styleClass="bg-white" stylesheets="@stylesDashboard.css">
                                        <children>
-                                          <AnchorPane prefHeight="115.0" prefWidth="49.0" styleClass="card2-left" stylesheets="@stylesDashboard.css" />
+                                          <ImageView fx:id="concerts_imageView" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
                                        </children>
                                     </AnchorPane>
-                                    <Label layoutX="55.0" layoutY="88.0" text="Cart" textFill="WHITE">
+                                    <Label fx:id="concerts_title" alignment="TOP_CENTER" layoutX="2.0" layoutY="175.0" prefHeight="81.0" prefWidth="204.0" textAlignment="CENTER" wrapText="true">
                                        <font>
-                                          <Font name="Microsoft Sans Serif" size="12.0" />
+                                          <Font name="Berlin Sans FB" size="17.0" />
                                        </font>
                                     </Label>
-                                    <FontAwesomeIcon glyphName="SHOPPING_CART" layoutX="104.0" layoutY="35.0" size="2em" />
                                  </children>
-                                 <styleClass>
-                                    <String fx:value="card2" />
-                                    <String fx:value="card" />
-                                 </styleClass>
                               </AnchorPane>
-                              <AnchorPane fx:id="concerts" layoutX="381.0" layoutY="11.0" prefHeight="117.0" prefWidth="142.0" stylesheets="@stylesDashboard.css">
-                                 <children>
-                                    <AnchorPane layoutY="1.0" prefHeight="115.0" prefWidth="49.0">
-                                       <children>
-                                          <AnchorPane prefHeight="115.0" prefWidth="49.0" styleClass="card3-left" stylesheets="@stylesDashboard.css" />
-                                       </children>
-                                    </AnchorPane>
-                                    <Label fx:id="concerts" layoutX="59.0" layoutY="87.0" text="Concerts" textFill="WHITE">
-                                       <font>
-                                          <Font name="Microsoft Sans Serif" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <FontAwesomeIcon glyphName="MUSIC" layoutX="111.0" layoutY="35.0" size="2em" />
-                                 </children>
-                                 <styleClass>
-                                    <String fx:value="card3" />
-                                    <String fx:value="card" />
-                                 </styleClass>
-                              </AnchorPane>
-                           </children></AnchorPane>
-                        <AnchorPane layoutX="11.0" layoutY="173.0" prefHeight="276.0" prefWidth="536.0" styleClass="bg-white" stylesheets="@stylesDashboard.css" />
+                              <Label layoutX="227.0" layoutY="14.0" text="Purchase Tickets">
+                                 <font>
+                                    <Font name="Verdana" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="213.0" layoutY="62.0" prefHeight="17.0" prefWidth="58.0" text="Tickets">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Spinner fx:id="concerts_tickets_quantity" editable="true" layoutX="439.0" layoutY="59.0" prefHeight="25.0" prefWidth="76.0" />
+                              <ComboBox fx:id="concerts_tickets" layoutX="264.0" layoutY="59.0" prefWidth="150.0" />
+                              <Label layoutX="448.0" layoutY="29.0" prefHeight="17.0" prefWidth="58.0" text="Quantity">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="213.0" layoutY="110.0" prefHeight="20.0" prefWidth="73.0" text="Price (PHP)">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="213.0" layoutY="139.0" prefHeight="20.0" prefWidth="94.0" text="PHP 0">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="concerts_btn_addToCart" layoutX="217.0" layoutY="187.0" mnemonicParsing="false" styleClass="addToCart-button" stylesheets="@stylesDashboard.css" text="Add To Cart" />
+                           </children>
+                        </AnchorPane>
                      </children>
                   </AnchorPane>
                </children>

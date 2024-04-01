@@ -40,7 +40,7 @@ public class loginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        Platform.runLater(() -> mainPane.requestFocus());
+        Platform.runLater(() -> mainPane.requestFocus()); //this whole segment of code is to request focus for when the main pane is clicked so that the text fields aren't focused
 
         mainPane.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
@@ -52,7 +52,7 @@ public class loginController implements Initializable {
             }
         });
 
-        button_sign_up.setOnAction(this::switchToSignupScene);
+        button_sign_up.setOnAction(this::switchToSignupScene); //sets button_sign_up to switch to Sign Up scene
         button_login.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -62,7 +62,7 @@ public class loginController implements Initializable {
     }
 
     @FXML
-    private void switchToSignupScene(ActionEvent event) {
+    private void switchToSignupScene(ActionEvent event) { //method for switching to sign-up.fxml
         try {
             Parent signupRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("sign-up.fxml")));
             Scene signupScene = new Scene(signupRoot);

@@ -113,3 +113,14 @@
 .select-button:hover{
     -fx-background-color: #4263d7;
 }
+
+.addToCart-button{
+    -fx-background-color: #50a135;
+    -fx-background-radius: 15px;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+}
+
+.addToCart-button:hover{
+    -fx-background-color: #62c53f;
+}

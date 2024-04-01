@@ -66,6 +66,9 @@ public class SignUpController implements Initializable {
                 }
             }
         });
+
+        tf_username.setOnAction(event -> tf_password.requestFocus()); //press enter to go to tf_password
+        tf_password.setOnAction(event -> button_register.fire()); //press enter to register user
     }
 
     @FXML

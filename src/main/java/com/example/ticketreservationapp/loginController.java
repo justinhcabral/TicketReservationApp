@@ -59,6 +59,9 @@ public class loginController implements Initializable {
                 DBUtils.logInUser(actionEvent, tf_username.getText(), tf_password.getText());
             }
         });
+
+        tf_username.setOnAction(event -> tf_password.requestFocus());// press enter to move on to password field
+        tf_password.setOnAction(event -> button_login.fire()); //press enter to login
     }
 
     @FXML

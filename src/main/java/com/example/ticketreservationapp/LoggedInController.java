@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -92,6 +94,9 @@ public class LoggedInController implements Initializable {
     @FXML
     private AnchorPane ticketPurchasePage;
 
+    @FXML
+    private AnchorPane concerts_imageView_container;
+
     private Image image;
 
     @Override
@@ -106,6 +111,12 @@ public class LoggedInController implements Initializable {
         });
 
         showConcertDataList();
+        concerts_imageView.setOnMouseClicked(event -> showImagePreview(concerts_imageView.getImage())); //image preview when clicked
+
+        concerts_tableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            concerts_imageView_container.setVisible(newSelection != null);
+        });
+
     }
 
     public void setUserInformation(String username){
@@ -187,7 +198,26 @@ public class LoggedInController implements Initializable {
 
         String url = "file:" + conD.getImage();
 
-        image = new Image(url, 150,150,false,true);
+        image = new Image(url, 1000,1000,false,true);
         concerts_imageView.setImage(image);
     }
+    private void showImagePreview(Image image) { //to make the image clickable for preview
+    Stage previewStage = new Stage();
+    ImageView imageView = new ImageView(image);
+    imageView.setPreserveRatio(true);
+    imageView.setFitWidth(500); // Set the width of the image. The height will be adjusted to keep the aspect ratio.
+
+    Button closeButton = new Button("Close");
+    closeButton.setOnAction(event -> previewStage.close());
+
+    VBox layout = new VBox(10);
+    layout.getChildren().addAll(imageView, closeButton);
+    layout.setAlignment(Pos.CENTER);
+    Image icon = new Image("file:src/main/resources/com/example/ticketreservationapp/Logo.png");
+    previewStage.getIcons().add(icon);
+
+    Scene scene = new Scene(layout);
+    previewStage.setScene(scene);
+    previewStage.show();
+}
 }

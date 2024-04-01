@@ -74,13 +74,16 @@ public class LoggedInController implements Initializable {
     private TableView<concertData> concerts_tableView;
 
     @FXML
-    private ComboBox<?> concerts_tickets;
+    private ComboBox<ticketData> concerts_tickets;
 
     @FXML
     private Spinner<?> concerts_tickets_quantity;
 
     @FXML
     private Label concerts_tickets_label;
+
+    @FXML
+    private Label concerts_tickets_price;
 
     @FXML
     private Label concerts_title;
@@ -96,6 +99,9 @@ public class LoggedInController implements Initializable {
 
     @FXML
     private AnchorPane concerts_imageView_container;
+
+    @FXML
+    private AnchorPane cartPage;
 
     private Image image;
 
@@ -123,15 +129,9 @@ public class LoggedInController implements Initializable {
             concerts_imageView_container.setVisible(newSelection != null);
         });
 
-//        concerts_tableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-//            comboBox();
-//        });
-//
-//        concerts_tickets.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-//            if (newSelection != null) {
-//                concerts_tickets_label.setText(newSelection.toString());
-//            }
-//        });
+        concerts_tableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            comboBox();
+        });
 
     }
 
@@ -143,15 +143,28 @@ public class LoggedInController implements Initializable {
         if(event.getSource() == home_btn_sidebar){
             HomePage.setVisible(true);
             ticketPurchasePage.setVisible(false);
+            cartPage.setVisible(false);
+
 
             home_btn_sidebar.setStyle("-fx-background-color: #8f523b");
             concerts_btn_sidebar.setStyle("-fx-background-color: transparent");
+            cart_btn_sidebar.setStyle("-fx-background-color: transparent");
         } else if(event.getSource() == concerts_btn_sidebar){
             HomePage.setVisible(false);
             ticketPurchasePage.setVisible(true);
+            cartPage.setVisible(false);
 
             home_btn_sidebar.setStyle("-fx-background-color: transparent");
             concerts_btn_sidebar.setStyle("-fx-background-color: #8f523b");
+            cart_btn_sidebar.setStyle("-fx-background-color: transparent");
+        } else if(event.getSource() == cart_btn_sidebar){
+            HomePage.setVisible(false);
+            ticketPurchasePage.setVisible(false);
+            cartPage.setVisible(true);
+
+            home_btn_sidebar.setStyle("-fx-background-color: transparent");
+            concerts_btn_sidebar.setStyle("-fx-background-color: transparent");
+            cart_btn_sidebar.setStyle("-fx-background-color: #8f523b");
         }
     }
 
@@ -258,5 +271,53 @@ public class LoggedInController implements Initializable {
 //            }
 //        }
 //    }
+
+    public void comboBox(){
+    concertData conD = concerts_tableView.getSelectionModel().getSelectedItem();
+
+    if (conD != null){
+        String selectTickets = "SELECT * FROM tickets WHERE ConcertID = ?";
+        connect = DBUtils.connectDb();
+
+        try {
+            prepare = connect.prepareStatement(selectTickets);
+            prepare.setInt(1, conD.getConcertID());
+            result = prepare.executeQuery();
+
+            ObservableList<ticketData> listData = FXCollections.observableArrayList();
+
+            while(result.next()){
+                ticketData item = new ticketData(result.getInt("TicketID"),
+                                                 result.getInt("ConcertID"),
+                                                 result.getString("TicketType"),
+                                                 result.getString("Price"));
+                listData.add(item);
+            }
+
+            concerts_tickets.setItems(listData);
+            concerts_tickets.setCellFactory(param -> new ListCell<ticketData>() {
+                @Override
+                protected void updateItem(ticketData item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    if (empty || item == null || item.getTicketType() == null) {
+                        setText(null);
+                    } else {
+                        setText(item.getTicketType());
+                    }
+                }
+            });
+
+            concerts_tickets.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                if (newSelection != null) {
+                    concerts_tickets_label.setText(newSelection.getTicketType());
+                    concerts_tickets_price.setText(newSelection.getPrice());
+                }
+            });
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
 
 }

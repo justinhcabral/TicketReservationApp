@@ -65,7 +65,7 @@
          <center>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane fx:id="HomePage" layoutX="45.0" layoutY="100.0" prefHeight="400.0" prefWidth="440.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="HomePage" layoutX="45.0" layoutY="100.0" prefHeight="400.0" prefWidth="440.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane layoutX="11.0" layoutY="17.0" prefHeight="429.0" prefWidth="536.0" styleClass="bg-white" stylesheets="@stylesDashboard.css" />
                      </children>
@@ -94,7 +94,6 @@
                                        </font>
                                     </Label>
                                     <Label fx:id="concerts_btn_date" layoutX="79.0" layoutY="85.0" prefHeight="17.0" prefWidth="113.0" styleClass="label-info" stylesheets="@stylesDashboard.css" />
-                                    <Button fx:id="concerts_btn_selectEvent" layoutX="81.0" layoutY="130.0" mnemonicParsing="false" styleClass="select-button" stylesheets="@stylesDashboard.css" text="Select" />
                                  </children>
                               </AnchorPane>
                               <TableView fx:id="concerts_tableView" layoutX="216.0" layoutY="2.0" onMouseClicked="#selectConcertDataList" prefHeight="163.0" prefWidth="319.0" stylesheets="@stylesDashboard.css">
@@ -139,17 +138,41 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="213.0" layoutY="110.0" prefHeight="20.0" prefWidth="73.0" text="Price (PHP)">
+                              <Label layoutX="402.0" layoutY="110.0" prefHeight="20.0" prefWidth="73.0" text="Price (PHP)">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="213.0" layoutY="139.0" prefHeight="20.0" prefWidth="94.0" text="PHP 0">
+                              <Label layoutX="402.0" layoutY="137.0" prefHeight="20.0" prefWidth="94.0" text="PHP 0">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="concerts_btn_addToCart" layoutX="217.0" layoutY="187.0" mnemonicParsing="false" styleClass="addToCart-button" stylesheets="@stylesDashboard.css" text="Add To Cart" />
+                              <Button fx:id="concerts_btn_addToCart" layoutX="217.0" layoutY="204.0" mnemonicParsing="false" styleClass="addToCart-button" stylesheets="@stylesDashboard.css" text="Add To Cart" />
+                              <Label layoutX="234.0" layoutY="110.0" prefHeight="20.0" prefWidth="73.0" text="Ticket">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="concerts_tickets_label" layoutX="234.0" layoutY="137.0" prefHeight="20.0" prefWidth="145.0" text="---">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="98.0" layoutY="106.0" prefHeight="463.3333333333333" prefWidth="558.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <AnchorPane layoutX="13.0" layoutY="14.0" prefHeight="436.0" prefWidth="532.0" styleClass="bg-white" stylesheets="@stylesDashboard.css">
+                           <children>
+                              <FontAwesomeIcon glyphName="SHOPPING_CART" layoutX="14.0" layoutY="44.0" size="3EM" />
+                              <Label layoutX="62.0" layoutY="18.0" text="Cart">
+                                 <font>
+                                    <Font name="Verdana" size="20.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
                      </children>

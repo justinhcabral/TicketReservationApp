@@ -22,10 +22,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -83,6 +80,9 @@ public class LoggedInController implements Initializable {
     private Spinner<?> concerts_tickets_quantity;
 
     @FXML
+    private Label concerts_tickets_label;
+
+    @FXML
     private Label concerts_title;
 
     @FXML
@@ -98,6 +98,12 @@ public class LoggedInController implements Initializable {
     private AnchorPane concerts_imageView_container;
 
     private Image image;
+
+    //Database tools
+    private Connection connect;
+    private PreparedStatement prepare;
+    private Statement statement;
+    private ResultSet result;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -116,6 +122,16 @@ public class LoggedInController implements Initializable {
         concerts_tableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             concerts_imageView_container.setVisible(newSelection != null);
         });
+
+//        concerts_tableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+//            comboBox();
+//        });
+//
+//        concerts_tickets.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+//            if (newSelection != null) {
+//                concerts_tickets_label.setText(newSelection.toString());
+//            }
+//        });
 
     }
 
@@ -139,12 +155,6 @@ public class LoggedInController implements Initializable {
         }
     }
 
-    //Database tools
-    private Connection connect;
-    private PreparedStatement prepare;
-    private Statement statement;
-    private ResultSet result;
-
     public ObservableList<concertData> concertDataList(){
         ObservableList<concertData> listData = FXCollections.observableArrayList();
         String sql = "SELECT * FROM concerts ";
@@ -158,7 +168,8 @@ public class LoggedInController implements Initializable {
             concertData conD;
 
             while(result.next()){
-                conD = new concertData(result.getString("Title"),
+                conD = new concertData(result.getInt("ConcertID"),
+                        result.getString("Title"),
                         result.getString("Venue"),
                         result.getString("Image"),
                         result.getDate("Date"));
@@ -202,22 +213,50 @@ public class LoggedInController implements Initializable {
         concerts_imageView.setImage(image);
     }
     private void showImagePreview(Image image) { //to make the image clickable for preview
-    Stage previewStage = new Stage();
-    ImageView imageView = new ImageView(image);
-    imageView.setPreserveRatio(true);
-    imageView.setFitWidth(500); // Set the width of the image. The height will be adjusted to keep the aspect ratio.
+        Stage previewStage = new Stage();
+        ImageView imageView = new ImageView(image);
+        imageView.setPreserveRatio(true);
+        imageView.setFitWidth(500); // Set the width of the image. The height will be adjusted to keep the aspect ratio.
 
-    Button closeButton = new Button("Close");
-    closeButton.setOnAction(event -> previewStage.close());
+        Button closeButton = new Button("Close");
+        closeButton.setOnAction(event -> previewStage.close());
 
-    VBox layout = new VBox(10);
-    layout.getChildren().addAll(imageView, closeButton);
-    layout.setAlignment(Pos.CENTER);
-    Image icon = new Image("file:src/main/resources/com/example/ticketreservationapp/Logo.png");
-    previewStage.getIcons().add(icon);
+        VBox layout = new VBox(10);
+        layout.getChildren().addAll(imageView, closeButton);
+        layout.setAlignment(Pos.CENTER);
+        Image icon = new Image("file:src/main/resources/com/example/ticketreservationapp/Logo.png");
+        previewStage.getIcons().add(icon);
 
-    Scene scene = new Scene(layout);
-    previewStage.setScene(scene);
-    previewStage.show();
-}
+        Scene scene = new Scene(layout);
+        previewStage.setScene(scene);
+        previewStage.show();
+    }
+
+//    public void comboBox(){
+//        concertData conD = concerts_tableView.getSelectionModel().getSelectedItem();
+//
+//        if (conD != null){
+//            String selectTicketTypes = "SELECT TicketType FROM tickets WHERE ConcertID = ?";
+//            connect = DBUtils.connectDb();
+//
+//            try {
+//                prepare = connect.prepareStatement(selectTicketTypes);
+//                prepare.setInt(1, conD.getConcertID());
+//                result = prepare.executeQuery();
+//
+//                ObservableList listData = FXCollections.observableArrayList();
+//
+//                while(result.next()){
+//                    String item = result.getString("TicketType");
+//                    listData.add(item);
+//                }
+//
+//                concerts_tickets.setItems(listData);
+//                concerts_tickets_label.setText((String) concerts_tickets.getSelectionModel().getSelectedItem());
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
+
 }

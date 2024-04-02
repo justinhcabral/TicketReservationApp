@@ -6,14 +6,16 @@ public class Purchase {
     private int PurchaseID;
     private int userId;
     private int TicketID;
+    private String ConcertTitle;
     private String TicketType;
     private int QuantityPurchased;
     private double TotalPrice;
     private Date PurchaseDate;
 
-    public Purchase(int userId, int TicketID, String TicketType ,int QuantityPurchased, double TotalPrice, Date PurchaseDate) {
+    public Purchase(int userId, int TicketID, String concertTitle,String TicketType ,int QuantityPurchased, double TotalPrice, Date PurchaseDate) {
         this.userId = userId;
         this.TicketID = TicketID;
+        this.ConcertTitle = concertTitle;
         this.TicketType = TicketType;
         this.QuantityPurchased = QuantityPurchased;
         this.TotalPrice = TotalPrice;
@@ -26,6 +28,9 @@ public class Purchase {
 
     public int getUserId() {
         return userId;
+    }
+    public String getConcertTitle(){
+        return ConcertTitle;
     }
 
     public int getTicketID() {

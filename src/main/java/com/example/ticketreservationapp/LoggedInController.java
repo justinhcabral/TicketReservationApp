@@ -107,7 +107,8 @@ public class LoggedInController implements Initializable {
 
     @FXML
     private TableView<Purchase> cartTableView;
-
+    @FXML
+    private TableColumn<Purchase, String> colConcertTitle;
     @FXML
     private TableColumn<Purchase,String> colTicketType;
     @FXML
@@ -116,6 +117,8 @@ public class LoggedInController implements Initializable {
     private TableColumn<Purchase,Double> colPrice;
     @FXML
     private Label total_price;
+    @FXML
+    private Button btn_remove;
 
     private Image image;
     private int userID;
@@ -172,8 +175,6 @@ public class LoggedInController implements Initializable {
 
                     Integer Quantity = concerts_tickets_quantity.getValue();
                     if (Quantity == null) {
-                        // Handle the case where no value is selected in the Spinner
-                        // For example, you can show an error message to the user
                         System.out.println("Please select a quantity.");
                         return;
                     }
@@ -181,13 +182,28 @@ public class LoggedInController implements Initializable {
                     double Price = ticketPrice*QuantityPurchased;
                     Date PurchaseDate = Date.valueOf(LocalDate.now());
 
+                    // Get the concert title
+                    String concertTitle = "";
+                    try {
+                        String selectConcert = "SELECT * FROM concerts WHERE ConcertID = ?";
+                        PreparedStatement prepareConcert = connect.prepareStatement(selectConcert);
+                        prepareConcert.setInt(1, selectedTicket.getConcertID());
+                        ResultSet resultConcert = prepareConcert.executeQuery();
+                        if (resultConcert.next()) {
+                            concertTitle = resultConcert.getString("Title");
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
                     // Create the Purchase object
-                    Purchase purchase = new Purchase(userID, TicketID, ticketType,QuantityPurchased, Price, PurchaseDate);
+                    Purchase purchase = new Purchase(userID, TicketID, concertTitle, ticketType, QuantityPurchased, Price, PurchaseDate);
 
                     // Add the Purchase object to the cart items
                     cartItems.add(purchase);
 
                     // Update the cart TableView
+                    colConcertTitle.setCellValueFactory(new PropertyValueFactory<>("ConcertTitle"));
                     colTicketType.setCellValueFactory(new PropertyValueFactory<>("TicketType"));
                     colQuantity.setCellValueFactory(new PropertyValueFactory<>("QuantityPurchased"));
                     colPrice.setCellValueFactory(new PropertyValueFactory<>("TotalPrice"));
@@ -195,6 +211,21 @@ public class LoggedInController implements Initializable {
                     System.out.println("No ticket selected.");
                 }
                 setTotalPrice();
+            }
+        });
+
+        btn_remove.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                // Get the selected item
+                Purchase selectedItem = cartTableView.getSelectionModel().getSelectedItem();
+
+                // Remove the selected item
+                if (selectedItem != null) {
+                    cartTableView.getItems().remove(selectedItem);
+                } else {
+                    System.out.println("No item selected.");
+                }
             }
         });
 

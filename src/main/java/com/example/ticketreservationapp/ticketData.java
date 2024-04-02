@@ -4,9 +4,9 @@ public class ticketData {
     private int TicketID;
     private int ConcertID;
     private String TicketType;
-    private String Price;
+    private Double Price;
 
-    public ticketData(int ticketID, int concertID, String ticketType, String price){
+    public ticketData(int ticketID, int concertID, String ticketType, Double price){
         this.TicketID = ticketID;
         this.ConcertID = concertID;
         this.TicketType = ticketType;
@@ -25,11 +25,23 @@ public class ticketData {
         return TicketType;
     }
 
-    public String getPrice() {
+    public Double getPrice() {
         return Price;
     }
     @Override
     public String toString() {
         return TicketType;
     }
+
+    public void setTicketID(int ticketID){
+        this.TicketID = ticketID;
+    }
+    public void setTicketType(String ticketType) {
+        this.TicketType = ticketType;
+    }
+
+    public void setPrice(double price){
+        this.Price = price;
+    }
+
 }

@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.*;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -37,6 +38,14 @@ public class loginController implements Initializable {
     @FXML
     private BorderPane mainPane ;
 
+    //User ID
+    private int user_id;
+
+    //Database tools
+    private Connection connect;
+    private PreparedStatement prepare;
+    private Statement statement;
+    private ResultSet result;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -57,6 +66,8 @@ public class loginController implements Initializable {
             @Override
             public void handle(ActionEvent actionEvent) {
                 DBUtils.logInUser(actionEvent, tf_username.getText(), tf_password.getText());
+                user_id = getUserID(tf_username.getText(), tf_password.getText());
+                LoggedInController.setUserId(user_id);
             }
         });
 
@@ -75,5 +86,28 @@ public class loginController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public int getUserID(String username, String password) {
+        String query = "SELECT user_id FROM users WHERE username = ? AND password = ?";
+        int userID = -1;
+
+        try {
+            // Connect to the database
+            Connection connect = DBUtils.connectDb();
+
+            PreparedStatement preparedStatement = connect.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                userID = resultSet.getInt("user_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return userID;
     }
 }

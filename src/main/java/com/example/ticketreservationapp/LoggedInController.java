@@ -1,6 +1,7 @@
 package com.example.ticketreservationapp;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -23,6 +24,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -77,7 +79,7 @@ public class LoggedInController implements Initializable {
     private ComboBox<ticketData> concerts_tickets;
 
     @FXML
-    private Spinner<?> concerts_tickets_quantity;
+    private Spinner<Integer> concerts_tickets_quantity;
 
     @FXML
     private Label concerts_tickets_label;
@@ -103,7 +105,22 @@ public class LoggedInController implements Initializable {
     @FXML
     private AnchorPane cartPage;
 
+    @FXML
+    private TableView<Purchase> cartTableView;
+
+    @FXML
+    private TableColumn<Purchase,String> colTicketType;
+    @FXML
+    private TableColumn<Purchase,Integer> colQuantity;
+    @FXML
+    private TableColumn<Purchase,Double> colPrice;
+    @FXML
+    private Label total_price;
+
     private Image image;
+    private int userID;
+    private ticketData ticketType;
+
 
     //Database tools
     private Connection connect;
@@ -119,6 +136,7 @@ public class LoggedInController implements Initializable {
             @Override
             public void handle(ActionEvent actionEvent) {
                 DBUtils.changeScene(actionEvent, "login.fxml", "Stage Pass", null);
+                userID = -1;
             }
         });
 
@@ -133,6 +151,67 @@ public class LoggedInController implements Initializable {
             comboBox();
         });
 
+        showSpinnerValue();
+
+        // Declare ObservableList
+        ObservableList<Purchase> cartItems = FXCollections.observableArrayList();
+
+        // Set ObservableList as the items of the TableView
+        cartTableView.setItems(cartItems);
+
+        concerts_btn_addToCart.setOnAction(new EventHandler<ActionEvent>() { //add to cart button
+            @Override
+            public void handle(ActionEvent event) {
+                int user_id = userID;
+                ticketData selectedTicket = ticketType;
+
+                if (selectedTicket != null) {
+                    String ticketType = selectedTicket.getTicketType();
+                    int TicketID = selectedTicket.getTicketID();
+                    double ticketPrice = selectedTicket.getPrice();
+
+                    Integer Quantity = concerts_tickets_quantity.getValue();
+                    if (Quantity == null) {
+                        // Handle the case where no value is selected in the Spinner
+                        // For example, you can show an error message to the user
+                        System.out.println("Please select a quantity.");
+                        return;
+                    }
+                    int QuantityPurchased = Quantity.intValue();
+                    double Price = ticketPrice*QuantityPurchased;
+                    Date PurchaseDate = Date.valueOf(LocalDate.now());
+
+                    // Create the Purchase object
+                    Purchase purchase = new Purchase(userID, TicketID, ticketType,QuantityPurchased, Price, PurchaseDate);
+
+                    // Add the Purchase object to the cart items
+                    cartItems.add(purchase);
+
+                    // Update the cart TableView
+                    colTicketType.setCellValueFactory(new PropertyValueFactory<>("TicketType"));
+                    colQuantity.setCellValueFactory(new PropertyValueFactory<>("QuantityPurchased"));
+                    colPrice.setCellValueFactory(new PropertyValueFactory<>("TotalPrice"));
+                } else {
+                    System.out.println("No ticket selected.");
+                }
+                setTotalPrice();
+            }
+        });
+
+        cartTableView.getItems().addListener(new ListChangeListener<Purchase>() {
+            @Override
+            public void onChanged(ListChangeListener.Change<? extends Purchase> c) {
+                while (c.next()) {
+                    if (c.wasRemoved()) {
+                        setTotalPrice();
+                    }
+                }
+            }
+        });
+    }
+
+    public static void setUserId(int userID) {
+        userID = userID;
     }
 
     public void setUserInformation(String username){
@@ -245,79 +324,113 @@ public class LoggedInController implements Initializable {
         previewStage.show();
     }
 
-//    public void comboBox(){
-//        concertData conD = concerts_tableView.getSelectionModel().getSelectedItem();
-//
-//        if (conD != null){
-//            String selectTicketTypes = "SELECT TicketType FROM tickets WHERE ConcertID = ?";
-//            connect = DBUtils.connectDb();
-//
-//            try {
-//                prepare = connect.prepareStatement(selectTicketTypes);
-//                prepare.setInt(1, conD.getConcertID());
-//                result = prepare.executeQuery();
-//
-//                ObservableList listData = FXCollections.observableArrayList();
-//
-//                while(result.next()){
-//                    String item = result.getString("TicketType");
-//                    listData.add(item);
-//                }
-//
-//                concerts_tickets.setItems(listData);
-//                concerts_tickets_label.setText((String) concerts_tickets.getSelectionModel().getSelectedItem());
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
+    public void comboBox(){ //combobox for ticket selection
+        concertData conD = concerts_tableView.getSelectionModel().getSelectedItem();
 
-    public void comboBox(){
-    concertData conD = concerts_tableView.getSelectionModel().getSelectedItem();
+        if (conD != null){
+            String selectTickets = "SELECT * FROM tickets WHERE ConcertID = ?";
+            connect = DBUtils.connectDb();
 
-    if (conD != null){
-        String selectTickets = "SELECT * FROM tickets WHERE ConcertID = ?";
-        connect = DBUtils.connectDb();
+            try {
+                prepare = connect.prepareStatement(selectTickets);
+                prepare.setInt(1, conD.getConcertID());
+                result = prepare.executeQuery();
+
+                ObservableList<ticketData> listData = FXCollections.observableArrayList();
+
+                while(result.next()){
+                    ticketData item = new ticketData(result.getInt("TicketID"),
+                                                     result.getInt("ConcertID"),
+                                                     result.getString("TicketType"),
+                                                     result.getDouble("Price"));
+                    listData.add(item);
+                }
+
+                concerts_tickets.setItems(listData);
+                concerts_tickets.setCellFactory(param -> new ListCell<ticketData>() {
+                    @Override
+                    protected void updateItem(ticketData item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (empty || item == null || item.getTicketType() == null) {
+                            setText(null);
+                        } else {
+                            setText(item.getTicketType());
+                        }
+                    }
+                });
+
+                concerts_tickets.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                    if (newSelection != null) {
+                        int ticketID = newSelection.getTicketID();
+                        String ticketTypeText = newSelection.getTicketType();
+                        double price = newSelection.getPrice();
+                        concerts_tickets_label.setText(newSelection.getTicketType());
+                        concerts_tickets_price.setText(String.valueOf(newSelection.getPrice()));
+
+                        if (newSelection != null) {
+                            ticketID = newSelection.getTicketID();
+                            ticketTypeText = newSelection.getTicketType();
+                            price = newSelection.getPrice();
+                            concerts_tickets_label.setText(ticketTypeText);
+                            concerts_tickets_price.setText(String.valueOf(price));
+
+                            // Initialize ticketType before calling methods on it
+                            ticketType = new ticketData(ticketID, newSelection.getConcertID(), ticketTypeText, price);
+                        }
+
+                    }
+                });
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private SpinnerValueFactory<Integer> quantitySpinner;
+
+    public void showSpinnerValue(){
+
+        quantitySpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,10, 0);
+        concerts_tickets_quantity.setValueFactory(quantitySpinner);
+
+    }
+
+    public ObservableList<ticketData> TicketList() {
+        ObservableList<ticketData> ticketDataList = FXCollections.observableArrayList();
+
+        // Connect to the database
+        Connection connect = DBUtils.connectDb();
+
+        // Define the SQL query
+        String sql = "SELECT * FROM tickets";
 
         try {
-            prepare = connect.prepareStatement(selectTickets);
-            prepare.setInt(1, conD.getConcertID());
-            result = prepare.executeQuery();
+            // Prepare and execute the SQL query
+            PreparedStatement prepare = connect.prepareStatement(sql);
+            ResultSet result = prepare.executeQuery();
 
-            ObservableList<ticketData> listData = FXCollections.observableArrayList();
-
-            while(result.next()){
-                ticketData item = new ticketData(result.getInt("TicketID"),
-                                                 result.getInt("ConcertID"),
-                                                 result.getString("TicketType"),
-                                                 result.getString("Price"));
-                listData.add(item);
+            // For each row in the result set, create a ticketData object and add it to the list
+            while (result.next()) {
+                ticketData ticket = new ticketData(result.getInt("TicketID"),
+                        result.getInt("ConcertID"),
+                        result.getString("TicketType"),
+                        result.getDouble("Price"));
+                ticketDataList.add(ticket);
             }
-
-            concerts_tickets.setItems(listData);
-            concerts_tickets.setCellFactory(param -> new ListCell<ticketData>() {
-                @Override
-                protected void updateItem(ticketData item, boolean empty) {
-                    super.updateItem(item, empty);
-
-                    if (empty || item == null || item.getTicketType() == null) {
-                        setText(null);
-                    } else {
-                        setText(item.getTicketType());
-                    }
-                }
-            });
-
-            concerts_tickets.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-                if (newSelection != null) {
-                    concerts_tickets_label.setText(newSelection.getTicketType());
-                    concerts_tickets_price.setText(newSelection.getPrice());
-                }
-            });
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return ticketDataList;
     }
-}
+
+    public void setTotalPrice(){
+        double sum = 0;
+        for (Purchase purchase : cartTableView.getItems()) {
+            sum += purchase.getTotalPrice();
+        }
+        total_price.setText(String.valueOf(sum));
+    }
 
 }

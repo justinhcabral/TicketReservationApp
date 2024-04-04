@@ -1,32 +1,27 @@
 package com.example.ticketreservationapp;
 
+//Imports
+
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class LoggedInController implements Initializable {
@@ -184,10 +179,14 @@ public class LoggedInController implements Initializable {
     @FXML
     private Label total_price1;
 
+    @FXML
+    private AnchorPane mainPane;
+
 
     private Image image;
-    private int userID;
+    private static int userID;
     private ticketData ticketType;
+
 
 
     //Database tools
@@ -195,6 +194,10 @@ public class LoggedInController implements Initializable {
     private PreparedStatement prepare;
     private Statement statement;
     private ResultSet result;
+
+    public int getUserId() {
+        return this.userID;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -313,10 +316,116 @@ public class LoggedInController implements Initializable {
         colTicketType1.setCellValueFactory(new PropertyValueFactory<>("TicketType"));
         colQuantity1.setCellValueFactory(new PropertyValueFactory<>("QuantityPurchased"));
         colPrice1.setCellValueFactory(new PropertyValueFactory<>("TotalPrice"));
+
+        btn_order.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String fullName = tf_fullName.getText();
+                String billingAddress = tf_billingAddress.getText();
+                String city = tf_city.getText();
+                String postalCode = tf_postalCode.getText();
+                String phoneNumber = tf_phoneNumber.getText();
+                String emailAddress = tf_emailAddress.getText();
+                String cardNumber = tf_cardNumber.getText();
+                String cvv = tf_cvv.getText();
+
+                if (cardNumber.length() != 16 || cvv.length() != 3) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Invalid inputs in card number and CVV text fields");
+                    alert.show();
+                    return;
+                }
+
+                // If inputs are valid, insert the data into the database
+                try (Connection connect = DBUtils.connectDb()) {
+                    String query = "UPDATE users SET fullName = ?, billingAddress = ?, city = ?, postalCode = ?, phoneNumber = ?, emailAddress = ?, cardNumber = ?, CVV = ? WHERE user_id = ?";
+                    assert connect != null;
+                    PreparedStatement preparedStatement = connect.prepareStatement(query);
+                    preparedStatement.setString(1, fullName);
+                    preparedStatement.setString(2, billingAddress);
+                    preparedStatement.setString(3, city);
+                    preparedStatement.setString(4, postalCode);
+                    preparedStatement.setString(5, phoneNumber);
+                    preparedStatement.setString(6, emailAddress);
+                    preparedStatement.setString(7, cardNumber);
+                    preparedStatement.setString(8, cvv);
+                    preparedStatement.setInt(9, userID);
+                    preparedStatement.executeUpdate();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                try (Connection connect = DBUtils.connectDb()) {
+                    // Check if the user_id exists in the users table
+                    String queryUser = "SELECT user_id FROM users WHERE user_id = ?";
+                    PreparedStatement preparedStatementUser = connect.prepareStatement(queryUser);
+                    preparedStatementUser.setInt(1, userID);
+                    ResultSet resultSetUser = preparedStatementUser.executeQuery();
+
+                    if (!resultSetUser.next()) {
+                        System.out.println("User ID does not exist in the users table.");
+                        return;
+                    }
+
+                    // Prepare the SQL query to insert into the purchases table
+                    String queryPurchase = "INSERT INTO purchases (user_id, TicketID, ConcertTitle, TicketType, QuantityPurchased, TotalPrice, PurchaseDate) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    PreparedStatement preparedStatementPurchase = connect.prepareStatement(queryPurchase, Statement.RETURN_GENERATED_KEYS);
+
+                    // Iterate over the items in the cartTableView1
+                    for (Purchase purchase : cartTableView1.getItems()) {
+                        // Retrieve the concert title, ticket type, quantity, and price
+                        int ticketId = purchase.getTicketID();
+                        String concertTitle = purchase.getConcertTitle();
+                        String ticketType = purchase.getTicketType();
+                        int quantity = purchase.getQuantityPurchased();
+                        double price = purchase.getTotalPrice();
+                        Date purchaseDate = Date.valueOf(LocalDate.now());
+
+                        // Set the parameters for the purchases table
+                        preparedStatementPurchase.setInt(1, userID);
+                        preparedStatementPurchase.setInt(2, ticketId);
+                        preparedStatementPurchase.setString(3, concertTitle);
+                        preparedStatementPurchase.setString(4, ticketType);
+                        preparedStatementPurchase.setInt(5, quantity);
+                        preparedStatementPurchase.setDouble(6, price);
+                        preparedStatementPurchase.setDate(7, purchaseDate);
+
+                        // Execute the query to insert into the purchases table
+                        preparedStatementPurchase.executeUpdate();
+
+                        // Get the generated purchase_id
+                        ResultSet rs = preparedStatementPurchase.getGeneratedKeys();
+                        if (rs.next()) {
+                            int purchaseId = rs.getInt(1);
+
+                            // Use the purchase_id for the subsequent insert operations
+                            // ... your code here ...
+                        }
+                    }
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Order Successful");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Your order has been placed successfully!");
+                    alert.showAndWait();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        tf_fullName.setOnAction(event -> tf_billingAddress.requestFocus());
+        tf_billingAddress.setOnAction(event -> tf_city.requestFocus());
+        tf_city.setOnAction(event -> tf_postalCode.requestFocus());
+        tf_postalCode.setOnAction(event -> tf_phoneNumber.requestFocus());
+        tf_phoneNumber.setOnAction(event -> tf_emailAddress.requestFocus());
+        tf_emailAddress.setOnAction(event -> tf_cardNumber.requestFocus());
+        tf_cardNumber.setOnAction(event -> tf_cvv.requestFocus());
+        tf_cvv.setOnAction(event -> mainPane.requestFocus());
+
     }
 
     public static void setUserId(int userID) {
-        userID = userID;
+        LoggedInController.userID = userID;
     }
 
     public void setUserInformation(String username){
@@ -344,7 +453,6 @@ public class LoggedInController implements Initializable {
             ticketPurchasePage.setVisible(false);
             cartPage.setVisible(false);
             checkOutPage.setVisible(false);
-
 
             home_btn_sidebar.setStyle("-fx-background-color: #8f523b");
             concerts_btn_sidebar.setStyle("-fx-background-color: transparent");

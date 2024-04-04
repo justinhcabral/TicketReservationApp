@@ -135,3 +135,7 @@
 .removeFromCart-button:hover{
     -fx-background-color: #b23c3c;
 }
+
+.imageAnchor:hover{
+    -fx-cursor: hand;
+}

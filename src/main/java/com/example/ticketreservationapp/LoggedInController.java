@@ -18,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -107,18 +108,82 @@ public class LoggedInController implements Initializable {
 
     @FXML
     private TableView<Purchase> cartTableView;
+
     @FXML
     private TableColumn<Purchase, String> colConcertTitle;
+
     @FXML
     private TableColumn<Purchase,String> colTicketType;
+
     @FXML
     private TableColumn<Purchase,Integer> colQuantity;
+
     @FXML
     private TableColumn<Purchase,Double> colPrice;
+
+    @FXML
+    private TableView<Purchase> cartTableView1;
+
+    @FXML
+    private TableColumn<Purchase, String> colConcertTitle1;
+
+    @FXML
+    private TableColumn<Purchase,String> colTicketType1;
+
+    @FXML
+    private TableColumn<Purchase,Integer> colQuantity1;
+
+    @FXML
+    private TableColumn<Purchase,Double> colPrice1;
+
     @FXML
     private Label total_price;
+
     @FXML
     private Button btn_remove;
+
+    @FXML
+    private Button cart_checkout;
+
+    @FXML
+    private BorderPane checkOutPage;
+
+    @FXML
+    private TextField tf_fullName;
+
+    @FXML
+    private TextField tf_billingAddress;
+
+    @FXML
+    private TextField tf_city;
+
+    @FXML
+    private TextField tf_postalCode;
+
+    @FXML
+    private TextField tf_phoneNumber;
+
+    @FXML
+    private TextField tf_emailAddress;
+
+    @FXML
+    private TextField tf_cardNumber;
+
+    @FXML
+    private TextField tf_cvv;
+
+    @FXML
+    private Button btn_order;
+
+    @FXML
+    private Button btn_cancelOrder;
+
+    @FXML
+    private BorderPane dashboard;
+
+    @FXML
+    private Label total_price1;
+
 
     private Image image;
     private int userID;
@@ -174,8 +239,11 @@ public class LoggedInController implements Initializable {
                     double ticketPrice = selectedTicket.getPrice();
 
                     Integer Quantity = concerts_tickets_quantity.getValue();
-                    if (Quantity == null) {
+                    if (Quantity == null || Quantity == 0) {
                         System.out.println("Please select a quantity.");
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText("Tickets cannot be 0");
+                        alert.show();
                         return;
                     }
                     int QuantityPurchased = Quantity.intValue();
@@ -239,6 +307,12 @@ public class LoggedInController implements Initializable {
                 }
             }
         });
+        cartTableView1.itemsProperty().bind(cartTableView.itemsProperty());
+
+        colConcertTitle1.setCellValueFactory(new PropertyValueFactory<>("ConcertTitle"));
+        colTicketType1.setCellValueFactory(new PropertyValueFactory<>("TicketType"));
+        colQuantity1.setCellValueFactory(new PropertyValueFactory<>("QuantityPurchased"));
+        colPrice1.setCellValueFactory(new PropertyValueFactory<>("TotalPrice"));
     }
 
     public static void setUserId(int userID) {
@@ -250,10 +324,26 @@ public class LoggedInController implements Initializable {
     }
 
     public void switchScene(ActionEvent event){
+        if(HomePage.isVisible()){
+            home_btn_sidebar.setStyle("-fx-background-color: #8f523b");
+            concerts_btn_sidebar.setStyle("-fx-background-color: transparent");
+            cart_btn_sidebar.setStyle("-fx-background-color: transparent");
+        } else if(ticketPurchasePage.isVisible()){
+            home_btn_sidebar.setStyle("-fx-background-color: transparent");
+            concerts_btn_sidebar.setStyle("-fx-background-color: #8f523b");
+            cart_btn_sidebar.setStyle("-fx-background-color: transparent");
+        } else if(cartPage.isVisible()){
+            home_btn_sidebar.setStyle("-fx-background-color: transparent");
+            concerts_btn_sidebar.setStyle("-fx-background-color: transparent");
+            cart_btn_sidebar.setStyle("-fx-background-color: #8f523b");
+        }
+
+
         if(event.getSource() == home_btn_sidebar){
             HomePage.setVisible(true);
             ticketPurchasePage.setVisible(false);
             cartPage.setVisible(false);
+            checkOutPage.setVisible(false);
 
 
             home_btn_sidebar.setStyle("-fx-background-color: #8f523b");
@@ -263,6 +353,7 @@ public class LoggedInController implements Initializable {
             HomePage.setVisible(false);
             ticketPurchasePage.setVisible(true);
             cartPage.setVisible(false);
+            checkOutPage.setVisible(false);
 
             home_btn_sidebar.setStyle("-fx-background-color: transparent");
             concerts_btn_sidebar.setStyle("-fx-background-color: #8f523b");
@@ -271,10 +362,17 @@ public class LoggedInController implements Initializable {
             HomePage.setVisible(false);
             ticketPurchasePage.setVisible(false);
             cartPage.setVisible(true);
+            checkOutPage.setVisible(false);
 
             home_btn_sidebar.setStyle("-fx-background-color: transparent");
             concerts_btn_sidebar.setStyle("-fx-background-color: transparent");
             cart_btn_sidebar.setStyle("-fx-background-color: #8f523b");
+        } else if(event.getSource() == cart_checkout){
+            dashboard.setVisible(false);
+            checkOutPage.setVisible(true);
+        } else if (event.getSource() == btn_cancelOrder){
+            dashboard.setVisible(true);
+            checkOutPage.setVisible(false);
         }
     }
 
@@ -462,6 +560,7 @@ public class LoggedInController implements Initializable {
             sum += purchase.getTotalPrice();
         }
         total_price.setText(String.valueOf(sum));
+        total_price1.setText(String.valueOf(sum));
     }
 
 }

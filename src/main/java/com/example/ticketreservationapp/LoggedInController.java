@@ -2,6 +2,8 @@ package com.example.ticketreservationapp;
 
 //Imports
 
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -19,6 +21,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import javafx.animation.KeyFrame;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
@@ -182,6 +186,11 @@ public class LoggedInController implements Initializable {
     @FXML
     private AnchorPane mainPane;
 
+    @FXML
+    private ImageView lanyposter;
+
+    @FXML
+    private ImageView auroraposter;
 
     private Image image;
     private static int userID;
@@ -398,8 +407,6 @@ public class LoggedInController implements Initializable {
                         if (rs.next()) {
                             int purchaseId = rs.getInt(1);
 
-                            // Use the purchase_id for the subsequent insert operations
-                            // ... your code here ...
                         }
                     }
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -410,6 +417,10 @@ public class LoggedInController implements Initializable {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+                HomePage.setVisible(true);
+                home_btn_sidebar.setStyle("-fx-background-color: #8f523b");
+                concerts_btn_sidebar.setStyle("-fx-background-color: transparent");
+                cart_btn_sidebar.setStyle("-fx-background-color: transparent");
             }
         });
 
@@ -421,6 +432,8 @@ public class LoggedInController implements Initializable {
         tf_emailAddress.setOnAction(event -> tf_cardNumber.requestFocus());
         tf_cardNumber.setOnAction(event -> tf_cvv.requestFocus());
         tf_cvv.setOnAction(event -> mainPane.requestFocus());
+
+        switchVisibility();
 
     }
 
@@ -671,4 +684,14 @@ public class LoggedInController implements Initializable {
         total_price1.setText(String.valueOf(sum));
     }
 
+    public void switchVisibility() {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
+            boolean isVisible = lanyposter.isVisible();
+            lanyposter.setVisible(!isVisible);
+            auroraposter.setVisible(isVisible);
+        }));
+
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
 }

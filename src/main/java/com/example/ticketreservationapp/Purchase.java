@@ -22,6 +22,17 @@ public class Purchase {
         this.PurchaseDate = PurchaseDate;
     }
 
+    public Purchase(int purchaseID, int userID, int TicketID, String concertTitle,String TicketType ,int QuantityPurchased, double TotalPrice, Date PurchaseDate) {
+        this.PurchaseID = purchaseID;
+        this.userId = userID;
+        this.TicketID = TicketID;
+        this.ConcertTitle = concertTitle;
+        this.TicketType = TicketType;
+        this.QuantityPurchased = QuantityPurchased;
+        this.TotalPrice = TotalPrice;
+        this.PurchaseDate = PurchaseDate;
+    }
+
     public int getPurchaseID() {
         return PurchaseID;
     }

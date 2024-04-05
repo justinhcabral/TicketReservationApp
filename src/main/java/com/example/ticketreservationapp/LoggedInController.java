@@ -34,7 +34,7 @@ public class LoggedInController implements Initializable {
     private AnchorPane HomePage;
 
     @FXML
-    private Button boughtTickets_btn_sidebar;
+    private Button purchase_hist_sidebar;
 
     @FXML
     private Button button_signOut;
@@ -192,6 +192,31 @@ public class LoggedInController implements Initializable {
     @FXML
     private ImageView auroraposter;
 
+    @FXML
+    private AnchorPane purchaseHistoryPage;
+
+    @FXML
+    private TableView<Purchase> purchaseHistoryTableView;
+
+    @FXML
+    private TableColumn<Purchase, Integer> colPurchaseID;
+
+    @FXML
+    private TableColumn<Purchase,String> colConTitle;
+
+    @FXML
+    private TableColumn<Purchase,String> colTickType;
+
+    @FXML
+    private TableColumn<Purchase, Date> colPurchaseDate;
+
+    @FXML
+    private TableColumn<Purchase,Double> colTotalPrice;
+
+    @FXML
+    private TableColumn<Purchase,Double> colQty;
+
+
     private Image image;
     private static int userID;
     private ticketData ticketType;
@@ -232,6 +257,17 @@ public class LoggedInController implements Initializable {
         });
 
         showSpinnerValue();
+
+        // Set the cell value factories of the TableColumns
+        colPurchaseID.setCellValueFactory(new PropertyValueFactory<>("PurchaseID"));
+        colConTitle.setCellValueFactory(new PropertyValueFactory<>("ConcertTitle"));
+        colTickType.setCellValueFactory(new PropertyValueFactory<>("TicketType"));
+        colPurchaseDate.setCellValueFactory(new PropertyValueFactory<>("PurchaseDate"));
+        colTotalPrice.setCellValueFactory(new PropertyValueFactory<>("TotalPrice"));
+        colQty.setCellValueFactory(new PropertyValueFactory<>("QuantityPurchased"));
+
+        ObservableList<Purchase> purchaseHistory = getPurchaseHistory();
+        purchaseHistoryTableView.setItems(purchaseHistory);
 
         // Declare ObservableList
         ObservableList<Purchase> cartItems = FXCollections.observableArrayList();
@@ -451,17 +487,26 @@ public class LoggedInController implements Initializable {
 
     public void switchScene(ActionEvent event){
         if(HomePage.isVisible()){
-            home_btn_sidebar.setStyle("-fx-background-color: #8f523b");
+            home_btn_sidebar.setStyle("-fx-background-color: #5d3325");
             concerts_btn_sidebar.setStyle("-fx-background-color: transparent");
             cart_btn_sidebar.setStyle("-fx-background-color: transparent");
+            purchase_hist_sidebar.setStyle("-fx-background-color: transparent");
+
         } else if(ticketPurchasePage.isVisible()){
             home_btn_sidebar.setStyle("-fx-background-color: transparent");
-            concerts_btn_sidebar.setStyle("-fx-background-color: #8f523b");
+            concerts_btn_sidebar.setStyle("-fx-background-color: #5d3325");
             cart_btn_sidebar.setStyle("-fx-background-color: transparent");
+            purchase_hist_sidebar.setStyle("-fx-background-color: transparent");
         } else if(cartPage.isVisible()){
             home_btn_sidebar.setStyle("-fx-background-color: transparent");
             concerts_btn_sidebar.setStyle("-fx-background-color: transparent");
-            cart_btn_sidebar.setStyle("-fx-background-color: #8f523b");
+            cart_btn_sidebar.setStyle("-fx-background-color: #5d3325");
+            purchase_hist_sidebar.setStyle("-fx-background-color: transparent");
+        } else if(purchaseHistoryPage.isVisible()){
+            home_btn_sidebar.setStyle("-fx-background-color: transparent");
+            concerts_btn_sidebar.setStyle("-fx-background-color: transparent");
+            cart_btn_sidebar.setStyle("-fx-background-color: transparent");
+            purchase_hist_sidebar.setStyle("-fx-background-color: #5d3325");
         }
 
 
@@ -470,28 +515,47 @@ public class LoggedInController implements Initializable {
             ticketPurchasePage.setVisible(false);
             cartPage.setVisible(false);
             checkOutPage.setVisible(false);
+            purchaseHistoryPage.setVisible(false);
 
-            home_btn_sidebar.setStyle("-fx-background-color: #8f523b");
+            home_btn_sidebar.setStyle("-fx-background-color: #5d3325");
             concerts_btn_sidebar.setStyle("-fx-background-color: transparent");
             cart_btn_sidebar.setStyle("-fx-background-color: transparent");
+            purchase_hist_sidebar.setStyle("-fx-background-color: transparent");
         } else if(event.getSource() == concerts_btn_sidebar){
             HomePage.setVisible(false);
             ticketPurchasePage.setVisible(true);
             cartPage.setVisible(false);
             checkOutPage.setVisible(false);
+            purchaseHistoryPage.setVisible(false);
 
             home_btn_sidebar.setStyle("-fx-background-color: transparent");
-            concerts_btn_sidebar.setStyle("-fx-background-color: #8f523b");
+            concerts_btn_sidebar.setStyle("-fx-background-color: #5d3325");
             cart_btn_sidebar.setStyle("-fx-background-color: transparent");
+            purchase_hist_sidebar.setStyle("-fx-background-color: transparent");
         } else if(event.getSource() == cart_btn_sidebar){
             HomePage.setVisible(false);
             ticketPurchasePage.setVisible(false);
             cartPage.setVisible(true);
             checkOutPage.setVisible(false);
+            purchaseHistoryPage.setVisible(false);
 
             home_btn_sidebar.setStyle("-fx-background-color: transparent");
             concerts_btn_sidebar.setStyle("-fx-background-color: transparent");
-            cart_btn_sidebar.setStyle("-fx-background-color: #8f523b");
+            cart_btn_sidebar.setStyle("-fx-background-color: #5d3325");
+            purchase_hist_sidebar.setStyle("-fx-background-color: transparent");
+        }else if(event.getSource() == purchase_hist_sidebar){
+            HomePage.setVisible(false);
+            ticketPurchasePage.setVisible(false);
+            cartPage.setVisible(false);
+            checkOutPage.setVisible(false);
+            purchaseHistoryPage.setVisible(true);
+
+            home_btn_sidebar.setStyle("-fx-background-color: transparent");
+            concerts_btn_sidebar.setStyle("-fx-background-color: transparent");
+            cart_btn_sidebar.setStyle("-fx-background-color: transparent");
+            purchase_hist_sidebar.setStyle("-fx-background-color: #5d3325");
+
+            initialize(null, null);
         } else if(event.getSource() == cart_checkout){
             dashboard.setVisible(false);
             checkOutPage.setVisible(true);
@@ -697,5 +761,49 @@ public class LoggedInController implements Initializable {
 
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+    }
+
+    public ObservableList<Purchase> getPurchaseHistory() {
+        ObservableList<Purchase> purchaseHistory = FXCollections.observableArrayList();
+
+        // Connect to the database
+        Connection connect = DBUtils.connectDb();
+
+        // Define the SQL query
+        String sql = "SELECT * FROM purchases WHERE user_id = ?";
+
+        try {
+            // Prepare the SQL statement
+            PreparedStatement preparedStatement = connect.prepareStatement(sql);
+
+            // Set the user_id parameter
+            preparedStatement.setInt(1, userID);
+
+            // Execute the SQL query and get the result set
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Iterate over the result set
+            while (resultSet.next()) {
+                // Retrieve the data from the result set
+                int purchaseID = resultSet.getInt("PurchaseID");
+                int ticketID = resultSet.getInt("TicketID");
+                String concertTitle = resultSet.getString("ConcertTitle");
+                String ticketType = resultSet.getString("TicketType");
+                int quantityPurchased = resultSet.getInt("QuantityPurchased");
+                double totalPrice = resultSet.getDouble("TotalPrice");
+                java.sql.Date sqlPurchaseDate = resultSet.getDate("PurchaseDate");
+                java.util.Date purchaseDate = new java.util.Date(sqlPurchaseDate.getTime());
+
+                // Create a Purchase object
+                Purchase purchase = new Purchase(purchaseID, userID, ticketID, concertTitle, ticketType, quantityPurchased, totalPrice, purchaseDate);
+
+                // Add the Purchase object to the ObservableList
+                purchaseHistory.add(purchase);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return purchaseHistory;
     }
 }

@@ -26,7 +26,7 @@
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Label>
-                  <Button fx:id="boughtTickets_btn_sidebar" layoutX="6.0" layoutY="235.0" mnemonicParsing="false" onAction="#switchScene" prefHeight="25.0" prefWidth="124.0" styleClass="nav-button" stylesheets="@stylesDashboard.css" text="Bought Tickets">
+                  <Button fx:id="purchase_hist_sidebar" layoutX="6.0" layoutY="235.0" mnemonicParsing="false" onAction="#switchScene" prefHeight="25.0" prefWidth="124.0" styleClass="nav-button" stylesheets="@stylesDashboard.css" text="Purchase History">
                      <font>
                         <Font name="Verdana" size="12.0" />
                      </font>
@@ -231,6 +231,29 @@
                                     <String fx:value="removeFromCart-button" />
                                  </styleClass>
                               </Button>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="purchaseHistoryPage" layoutX="138.0" layoutY="88.0" prefHeight="495.3333333333333" prefWidth="676.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <AnchorPane layoutX="10.0" layoutY="14.0" prefHeight="465.0" prefWidth="652.0" styleClass="bg-white" stylesheets="@stylesDashboard.css">
+                           <children>
+                              <Label layoutX="33.0" layoutY="11.0" text="Purchase History">
+                                 <font>
+                                    <Font name="Verdana Bold" size="32.0" />
+                                 </font>
+                              </Label>
+                              <TableView fx:id="purchaseHistoryTableView" layoutX="27.0" layoutY="98.0" prefHeight="295.0" prefWidth="605.0">
+                                <columns>
+                                  <TableColumn fx:id="colPurchaseID" prefWidth="75.33337020874023" text="Purchase ID" />
+                                  <TableColumn fx:id="colConTitle" prefWidth="158.44438934326172" text="Concert Title" />
+                                    <TableColumn fx:id="colTickType" prefWidth="131.3333740234375" text="Ticket Type" />
+                                    <TableColumn fx:id="colPurchaseDate" prefWidth="109.5555419921875" text="Purchase Date" />
+                                    <TableColumn fx:id="colQty" prefWidth="40.66668701171875" text="Qty" />
+                                    <TableColumn fx:id="colTotalPrice" minWidth="0.0" prefWidth="89.99993896484375" text="Total Price" />
+                                </columns>
+                              </TableView>
                            </children>
                         </AnchorPane>
                      </children>

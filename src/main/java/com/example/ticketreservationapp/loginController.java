@@ -9,9 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -20,6 +18,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class loginController implements Initializable {
@@ -65,11 +65,14 @@ public class loginController implements Initializable {
         button_login.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                DBUtils.logInUser(actionEvent, tf_username.getText(), tf_password.getText());
-                user_id = getUserID(tf_username.getText(), tf_password.getText());
-                LoggedInController.setUserId(user_id);
+                if (displayRandomNumberGenerator()) {
+                    DBUtils.logInUser(actionEvent, tf_username.getText(), tf_password.getText());
+                    user_id = getUserID(tf_username.getText(), tf_password.getText());
+                    LoggedInController.setUserId(user_id);
+                }
             }
         });
+
 
         tf_username.setOnAction(event -> tf_password.requestFocus());// press enter to move on to password field
         tf_password.setOnAction(event -> button_login.fire()); //press enter to login
@@ -109,5 +112,45 @@ public class loginController implements Initializable {
         }
 
         return userID;
+    }
+
+    public boolean displayRandomNumberGenerator() {
+        Random random = new Random();
+        int randomNumber = random.nextInt(1000000);
+
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Login Procedure");
+        dialog.setHeaderText("Please enter this number to proceed with login: " + randomNumber);
+        dialog.setContentText("Enter the number:");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            try {
+                int userInput = Integer.parseInt(result.get());
+                if (userInput == randomNumber) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Success Dialog");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Authentication successful. Proceeding with login...");
+                    alert.showAndWait();
+                    return true;
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Dialog");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Incorrect number entered. Please try again.");
+                    alert.showAndWait();
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("Invalid input. Please enter a number.");
+                alert.showAndWait();
+                return false;
+            }
+        }
+        return false;
     }
 }

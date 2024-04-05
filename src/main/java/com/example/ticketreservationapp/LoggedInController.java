@@ -418,6 +418,10 @@ public class LoggedInController implements Initializable {
                     e.printStackTrace();
                 }
                 HomePage.setVisible(true);
+                checkOutPage.setVisible(false);
+                dashboard.setVisible(true);
+                ticketPurchasePage.setVisible(false);
+                cartPage.setVisible(false);
                 home_btn_sidebar.setStyle("-fx-background-color: #8f523b");
                 concerts_btn_sidebar.setStyle("-fx-background-color: transparent");
                 cart_btn_sidebar.setStyle("-fx-background-color: transparent");
